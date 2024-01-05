@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Graphviz /> matches the snapshot 1`] = `
+<div
+  className="graphviz"
+  onClick={[Function]}
+/>
+`;

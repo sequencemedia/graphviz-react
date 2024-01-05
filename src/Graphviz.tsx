@@ -1,46 +1,75 @@
-import * as React from 'react';
-import { useEffect, useMemo } from 'react';
-import { graphviz, GraphvizOptions } from 'd3-graphviz';
+import React, {
+  createRef,
+  useEffect,
+  useCallback
+} from 'react'
+import classnames from 'classnames'
+import type { GraphvizOptions } from 'd3-graphviz'
+import { graphviz } from 'd3-graphviz'
 
-interface IGraphvizProps {
+export interface IGraphvizProps {
   /**
    * A string containing a graph representation using the Graphviz DOT language.
    * @see https://graphviz.org/doc/info/lang.html
    */
-  dot: string;
+  dot: string
   /**
    * Options to pass to the Graphviz renderer.
    */
-  options?: GraphvizOptions;
+  options?: GraphvizOptions
   /**
    * The classname to attach to this component for styling purposes.
    */
-  className?: string;
+  className?: string
+  /**
+   *  A handler for click events
+   */
+  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
 const defaultOptions: GraphvizOptions = {
-  fit: true,
-  height: 500,
-  width: 500,
-  zoom: false,
-};
+  useWorker: false
+}
 
-let counter = 0;
-// eslint-disable-next-line no-plusplus
-const getId = () => `graphviz${counter++}`;
-
-const Graphviz = ({ dot, className, options = {} }: IGraphvizProps) => {
-  const id = useMemo(getId, []);
+export default function Graphviz ({ dot, className, options = {}, onClick: handleClick = () => {} }: IGraphvizProps): JSX.Element {
+  const ref = createRef<HTMLDivElement>()
 
   useEffect(() => {
-    graphviz(`#${id}`, {
-      ...defaultOptions,
-      ...options,
-    }).renderDot(dot);
-  }, [dot, options]);
+    const {
+      current
+    } = ref
 
-  return <div className={className} id={id} />;
-};
+    if (current !== null) {
+      graphviz(current, {
+        ...defaultOptions,
+        ...options
+      }).renderDot(dot)
+    }
+  }, [dot, options])
 
-export { Graphviz, IGraphvizProps };
-export default Graphviz;
+  const onClick = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const {
+      current
+    } = ref
+
+    if (current !== null) {
+      const {
+        target
+      } = event
+
+      if (target instanceof Element) {
+        if (current.contains(target)) {
+          handleClick(event)
+        }
+      }
+    }
+  }, [dot, options])
+
+  return (
+    <div
+      className={classnames('graphviz', className)}
+      onClick={onClick}
+      ref={ref}
+    />
+  )
+}

@@ -1,0 +1,77 @@
+{
+  "env": {
+    "jest": true
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.mjs",
+        "*.cjs",
+        "*.jsx"
+      ],
+      "extends": [
+        "standard",
+        "plugin:react/recommended"
+      ],
+      "parserOptions": {
+        "ecmaFeatures": {
+          "jsx": true
+        }
+      },
+      "plugins": [
+        "react"
+      ],
+      "settings": {
+        "react": {
+          "version": "detect"
+        }
+      },
+      "rules": {
+        "react/display-name": "off",
+        "quotes": [
+          "error",
+          "single"
+        ],
+        "jsx-quotes": [
+          "error",
+          "prefer-single"
+        ],
+        "react/jsx-indent": [
+          "error",
+          2,
+          {
+            "checkAttributes": true,
+            "indentLogicalExpressions": true
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.mts",
+        "*.cts",
+        "*.tsx"
+      ],
+      "extends": [
+        "standard-with-typescript",
+        "plugin:react/recommended"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "src/__tests__/tsconfig.json",
+        "ecmaFeatures": {
+          "jsx": true
+        }
+      },
+      "plugins": [
+        "@typescript-eslint",
+        "react"
+      ],
+      "settings": {
+        "react": {
+          "version": "detect"
+        }
+      }
+    }
+  ]
+}

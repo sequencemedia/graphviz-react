@@ -1,27 +1,28 @@
 {
   "compilerOptions": {
     "outDir": "./lib",
-    "target": "es2015",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "strict": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "removeComments": true,
     "declaration": true,
-    "sourceMap": true,
     "jsx": "react",
+    "module": "NodeNext",
+    "target": "ESNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "isolatedModules": true,
+    "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "allowJs": true,
+    "baseUrl": ".",
+    "types": [
+      "node"
+    ],
     "typeRoots": [
-      "index.d.ts",
-      "node_modules/@types"
+      "./node_modules/@types"
     ]
   },
   "include": [
-    "src/**/*.tsx"
+    "src"
   ],
   "exclude": [
-    "src/**/*.test.tsx",
+    "src/__tests__",
+    "node_modues"
   ]
 }
