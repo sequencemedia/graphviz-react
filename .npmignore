@@ -1,0 +1,23 @@
+.DS_Store
+
+.circleci
+.github
+.husky
+
+.editorconfig
+.eslintignore
+.eslintrc
+
+.gitattributes
+
+.depsrc
+
+# User-defined NPM configuration
+.npmrc
+
+# User-defined NVM configuration
+.nvmrc
+
+# Jest
+jest.config.*
+src/__tests__
