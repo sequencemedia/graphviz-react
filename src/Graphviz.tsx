@@ -65,7 +65,7 @@ export default function Graphviz ({ graphRef: ref = createRef<HTMLDivElement>(),
         }
       }
     }
-  }, [dot, options])
+  }, [dot, options, handleClick])
 
   return (
     <div

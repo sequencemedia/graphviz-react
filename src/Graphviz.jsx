@@ -43,7 +43,7 @@ export default function Graphviz ({ graphRef: ref, dot, className, options, onCl
         handleClick(event)
       }
     }
-  }, [dot, options])
+  }, [dot, options, handleClick])
 
   return (
     <div
