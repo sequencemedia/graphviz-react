@@ -56,7 +56,7 @@ export default function Graphviz ({ graphRef: ref = createRef<HTMLDivElement>(),
 
     if (current !== null) {
       const {
-        target
+        target = null
       } = event
 
       if (target instanceof Element) {

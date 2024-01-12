@@ -36,11 +36,13 @@ export default function Graphviz ({ graphRef: ref, dot, className, options, onCl
 
     if (current) {
       const {
-        target
+        target = null
       } = event
 
-      if (current.contains(target)) {
-        handleClick(event)
+      if (target) {
+        if (current.contains(target)) {
+          handleClick(event)
+        }
       }
     }
   }, [dot, options, handleClick])
