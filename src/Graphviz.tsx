@@ -51,7 +51,7 @@ export default function Graphviz ({ graphRef: ref = createRef<HTMLDivElement>(),
 
   const onClick = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const {
-      current
+      current = null
     } = ref
 
     if (current !== null) {

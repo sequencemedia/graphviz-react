@@ -31,7 +31,7 @@ export default function Graphviz ({ graphRef: ref, dot, className, options, onCl
 
   const onClick = useCallback((event) => {
     const {
-      current
+      current = null
     } = ref
 
     if (current) {
