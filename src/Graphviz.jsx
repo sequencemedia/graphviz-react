@@ -13,9 +13,7 @@ const defaultOptions = {
   useWorker: false
 }
 
-export default function Graphviz ({ dot, className, options, onClick: handleClick }) {
-  const ref = createRef()
-
+export default function Graphviz ({ graphRef: ref, dot, className, options, onClick: handleClick }) {
   useEffect(() => {
     if (ref) {
       const {
@@ -57,6 +55,9 @@ export default function Graphviz ({ dot, className, options, onClick: handleClic
 }
 
 Graphviz.propTypes = {
+  graphRef: PropTypes.shape({
+    current: PropTypes.shape()
+  }),
   dot: PropTypes.string.isRequired,
   className: PropTypes.string,
   options: PropTypes.shape(),
@@ -64,6 +65,7 @@ Graphviz.propTypes = {
 }
 
 Graphviz.defaultProps = {
+  graphRef: createRef(),
   options: {},
   onClick () {
     //

@@ -9,6 +9,10 @@ import { graphviz } from 'd3-graphviz'
 
 export interface IGraphvizProps {
   /**
+   *  A React `ref` for the container
+   */
+  graphRef: React.RefObject<HTMLDivElement>
+  /**
    * A string containing a graph representation using the Graphviz DOT language.
    * @see https://graphviz.org/doc/info/lang.html
    */
@@ -31,9 +35,7 @@ const defaultOptions: GraphvizOptions = {
   useWorker: false
 }
 
-export default function Graphviz ({ dot, className, options = {}, onClick: handleClick = () => {} }: IGraphvizProps): JSX.Element {
-  const ref = createRef<HTMLDivElement>()
-
+export default function Graphviz ({ graphRef: ref = createRef<HTMLDivElement>(), dot, className, options = {}, onClick: handleClick = () => {} }: IGraphvizProps): JSX.Element {
   useEffect(() => {
     const {
       current
