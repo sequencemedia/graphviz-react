@@ -4,7 +4,7 @@ export interface IGraphvizProps {
     /**
      *  A React `ref` for the container
      */
-    graphRef: React.RefObject<HTMLDivElement>;
+    graphRef?: React.RefObject<HTMLDivElement>;
     /**
      * A string containing a graph representation using the Graphviz DOT language.
      * @see https://graphviz.org/doc/info/lang.html
