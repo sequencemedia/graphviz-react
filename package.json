@@ -3,12 +3,13 @@
   "version": "0.0.14",
   "description": "React component for displaying Graphviz graphs",
   "keywords": [
+    "Graphviz",
     "React",
-    "Graphviz"
+    "D3"
   ],
-  "main": "./lib/Graphviz.js",
+  "main": "./lib/GraphvizReact.js",
   "type": "module",
-  "types": "./lib/Graphviz.d.ts",
+  "types": "./lib/GraphvizReact.d.ts",
   "author": {
     "name": "Jonathan Perry for Sequence Media Limited",
     "email": "sequencemedia@sequencemedia.net",

@@ -1,11 +1,11 @@
 import React from 'react'
 import * as renderer from 'react-test-renderer'
-import Graphviz from '../Graphviz.tsx'
+import GraphvizReact from '../GraphvizReact.tsx'
 
-describe('<Graphviz />', () => {
+describe('<GraphvizReact />', () => {
   it('matches the snapshot', () => {
     const graphviz = renderer.create(
-      <Graphviz
+      <GraphvizReact
         dot='graph { a -- b }'
       />
     )
