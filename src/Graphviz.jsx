@@ -1,5 +1,6 @@
 import React, {
   createRef,
+  useState,
   useEffect,
   useCallback
 } from 'react'
@@ -9,25 +10,52 @@ import {
   graphviz
 } from 'd3-graphviz'
 
-const defaultOptions = {
+const DEFAULT_OPTIONS = {
   useWorker: false
 }
 
-export default function Graphviz ({ graphRef: ref, dot, className, options, onClick: handleClick }) {
+export default function GraphvizReact ({
+  graphRef: ref,
+  dot,
+  className,
+  options,
+  onStart,
+  onRenderStart,
+  onRenderEnd,
+  onEnd,
+  onClick: handleClick
+}) {
+  const [eventEmitter, setEventEmitter] = useState(null)
+
   useEffect(() => {
     if (ref) {
       const {
-        current
+        current = null
       } = ref
 
       if (current) {
-        graphviz(current, {
-          ...defaultOptions,
-          ...options
-        }).renderDot(dot)
+        const eventEmitter = (
+          graphviz(current, {
+            ...DEFAULT_OPTIONS,
+            ...options
+          })
+            .renderDot(dot)
+        )
+
+        setEventEmitter(eventEmitter)
       }
     }
   }, [dot, options])
+
+  useEffect(() => {
+    if (eventEmitter) {
+      eventEmitter
+        .on('start', onStart)
+        .on('renderStart', onRenderStart)
+        .on('renderEnd', onRenderEnd)
+        .on('end', onEnd)
+    }
+  }, [eventEmitter, onStart, onRenderStart, onRenderEnd, onEnd])
 
   const onClick = useCallback((event) => {
     const {
@@ -56,19 +84,35 @@ export default function Graphviz ({ graphRef: ref, dot, className, options, onCl
   )
 }
 
-Graphviz.propTypes = {
+GraphvizReact.propTypes = {
   graphRef: PropTypes.shape({
     current: PropTypes.shape()
   }),
   dot: PropTypes.string.isRequired,
   className: PropTypes.string,
   options: PropTypes.shape(),
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  onStart: PropTypes.func,
+  onRenderStart: PropTypes.func,
+  onRenderEnd: PropTypes.func,
+  onEnd: PropTypes.func
 }
 
-Graphviz.defaultProps = {
+GraphvizReact.defaultProps = {
   graphRef: createRef(),
   options: {},
+  onStart () {
+    //
+  },
+  onRenderStart () {
+    //
+  },
+  onRenderEnd () {
+    //
+  },
+  onEnd () {
+    //
+  },
   onClick () {
     //
   }

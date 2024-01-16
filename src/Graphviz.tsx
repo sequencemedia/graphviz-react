@@ -1,5 +1,6 @@
 import React, {
   createRef,
+  useState,
   useEffect,
   useCallback
 } from 'react'
@@ -29,25 +30,68 @@ export interface IGraphvizProps {
    *  A handler for click events
    */
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  /**
+   *  A handler for `start` events
+   */
+  onStart?: () => void
+  /**
+   *  A handler for `renderStart` events
+   */
+  onRenderStart?: () => void
+  /**
+   *  A handler for `renderEnd` events
+   */
+  onRenderEnd?: () => void
+  /**
+   *  A handler for `end` events
+   */
+  onEnd?: () => void
 }
 
-const defaultOptions: GraphvizOptions = {
+const DEFAULT_OPTIONS: GraphvizOptions = {
   useWorker: false
 }
 
-export default function Graphviz ({ graphRef: ref = createRef<HTMLDivElement>(), dot, className, options = {}, onClick: handleClick = () => {} }: IGraphvizProps): JSX.Element {
+export default function GraphvizReact ({
+  graphRef: ref = createRef<HTMLDivElement>(),
+  dot,
+  className,
+  options = {},
+  onStart = (): void => {},
+  onRenderStart = (): void => {},
+  onRenderEnd = (): void => {},
+  onEnd = (): void => {},
+  onClick: handleClick = (): void => {}
+}: IGraphvizProps): JSX.Element {
+  const [eventEmitter, setEventEmitter] = useState<any>(null)
+
   useEffect(() => {
     const {
-      current
+      current = null
     } = ref
 
     if (current !== null) {
-      graphviz(current, {
-        ...defaultOptions,
-        ...options
-      }).renderDot(dot)
+      const eventEmitter: any = (
+        graphviz(current, {
+          ...DEFAULT_OPTIONS,
+          ...options
+        })
+          .renderDot(dot)
+      )
+
+      setEventEmitter(eventEmitter)
     }
   }, [dot, options])
+
+  useEffect(() => {
+    if (eventEmitter !== null) {
+      eventEmitter
+        .on('start', onStart)
+        .on('renderStart', onRenderStart)
+        .on('renderEnd', onRenderEnd)
+        .on('end', onEnd)
+    }
+  }, [eventEmitter, onStart, onRenderStart, onRenderEnd, onEnd])
 
   const onClick = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
     const {

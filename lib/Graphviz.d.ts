@@ -22,5 +22,21 @@ export interface IGraphvizProps {
      *  A handler for click events
      */
     onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    /**
+     *  A handler for `start` events
+     */
+    onStart?: () => void;
+    /**
+     *  A handler for `renderStart` events
+     */
+    onRenderStart?: () => void;
+    /**
+     *  A handler for `renderEnd` events
+     */
+    onRenderEnd?: () => void;
+    /**
+     *  A handler for `end` events
+     */
+    onEnd?: () => void;
 }
-export default function Graphviz({ graphRef: ref, dot, className, options, onClick: handleClick }: IGraphvizProps): JSX.Element;
+export default function GraphvizReact({ graphRef: ref, dot, className, options, onStart, onRenderStart, onRenderEnd, onEnd, onClick: handleClick }: IGraphvizProps): JSX.Element;
