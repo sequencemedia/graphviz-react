@@ -43,7 +43,7 @@
     "@babel/preset-env": "^7.23.9",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
-    "@sequencemedia/hooks": "^1.0.474",
+    "@sequencemedia/hooks": "^1.0.475",
     "@types/d3-graphviz": "^2.6.10",
     "@types/jest": "^29.5.11",
     "@types/jsdom": "^21.1.6",
