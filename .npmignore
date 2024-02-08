@@ -12,6 +12,11 @@
 
 .depsrc
 
+# Configuration
+babel.config.cjs
+tsconfig.json
+jsconfig.json
+
 # User-defined NPM configuration
 .npmrc
 
