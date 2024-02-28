@@ -52,6 +52,30 @@ const DEFAULT_OPTIONS: GraphvizOptions = {
   useWorker: false
 }
 
+const resizeObserver = new ResizeObserver((entries) => {
+  for (const entry of entries) {
+    const {
+      target = null
+    } = entry
+
+    if (target !== null) {
+      const svg = target.querySelector('svg')
+
+      if (svg !== null) {
+        const {
+          contentRect: {
+            width,
+            height
+          }
+        } = entry
+
+        svg.setAttribute('width', width + 'px')
+        svg.setAttribute('height', height + 'px')
+      }
+    }
+  }
+})
+
 export default function GraphvizReact ({
   graphRef: ref = createRef<HTMLDivElement>(),
   dot,
@@ -80,6 +104,22 @@ export default function GraphvizReact ({
       )
 
       setEventEmitter(eventEmitter)
+    }
+  }, [dot, options])
+
+  useEffect(() => {
+    const { fit = false } = options
+
+    if (fit) {
+      const { current = null } = ref
+
+      if (current !== null) {
+        resizeObserver.observe(current)
+
+        return () => {
+          resizeObserver.unobserve(current)
+        }
+      }
     }
   }, [dot, options])
 

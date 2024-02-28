@@ -18,5 +18,8 @@ export default {
     '/node_modules\\/(?!d3-color)\\/',
     '/node_modules\\/(?!d3-graphviz)\\/',
     '/node_modules\\/core-js/'
+  ],
+  setupFiles: [
+    './src/__tests__/setup.mjs'
   ]
 }
