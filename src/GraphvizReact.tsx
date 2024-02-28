@@ -90,6 +90,22 @@ export default function GraphvizReact ({
   const [eventEmitter, setEventEmitter] = useState<any>(null)
 
   useEffect(() => {
+    const { fit = false } = options
+
+    if (fit) {
+      const { current = null } = ref
+
+      if (current !== null) {
+        resizeObserver.observe(current)
+
+        return () => {
+          resizeObserver.unobserve(current)
+        }
+      }
+    }
+  })
+
+  useEffect(() => {
     const {
       current = null
     } = ref
@@ -104,22 +120,6 @@ export default function GraphvizReact ({
       )
 
       setEventEmitter(eventEmitter)
-    }
-  }, [dot, options])
-
-  useEffect(() => {
-    const { fit = false } = options
-
-    if (fit) {
-      const { current = null } = ref
-
-      if (current !== null) {
-        resizeObserver.observe(current)
-
-        return () => {
-          resizeObserver.unobserve(current)
-        }
-      }
     }
   }, [dot, options])
 
