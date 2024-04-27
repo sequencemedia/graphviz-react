@@ -53,7 +53,7 @@
         "*.tsx"
       ],
       "extends": [
-        "standard-with-typescript",
+        "love",
         "plugin:react/recommended"
       ],
       "parser": "@typescript-eslint/parser",
@@ -71,6 +71,9 @@
         "react": {
           "version": "detect"
         }
+      },
+      "rules": {
+        "no-undef": "off"
       }
     }
   ],

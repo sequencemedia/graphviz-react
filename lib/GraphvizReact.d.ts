@@ -39,4 +39,4 @@ export interface IGraphvizProps {
      */
     onEnd?: () => void;
 }
-export default function GraphvizReact({ graphRef: ref, dot, className, options, onStart, onRenderStart, onRenderEnd, onEnd, onClick: handleClick }: IGraphvizProps): JSX.Element;
+export default function GraphvizReact({ graphRef: ref, dot, className, options, onStart, onRenderStart, onRenderEnd, onEnd, onClick }: IGraphvizProps): JSX.Element;

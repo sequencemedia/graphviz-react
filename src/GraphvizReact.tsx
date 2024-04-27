@@ -76,16 +76,36 @@ const resizeObserver = new ResizeObserver((entries) => {
   }
 })
 
+function handleStart (): void {
+  //
+}
+
+function handleRenderStart (): void {
+  //
+}
+
+function handleRenderEnd (): void {
+  //
+}
+
+function handleEnd (): void {
+  //
+}
+
+function handleClick (): void {
+  //
+}
+
 export default function GraphvizReact ({
   graphRef: ref = createRef<HTMLDivElement>(),
   dot,
   className,
   options = {},
-  onStart = (): void => {},
-  onRenderStart = (): void => {},
-  onRenderEnd = (): void => {},
-  onEnd = (): void => {},
-  onClick: handleClick = (): void => {}
+  onStart = handleStart,
+  onRenderStart = handleRenderStart,
+  onRenderEnd = handleRenderEnd,
+  onEnd = handleEnd,
+  onClick = handleClick
 }: IGraphvizProps): JSX.Element {
   const [eventEmitter, setEventEmitter] = useState<any>(null)
 
@@ -133,7 +153,7 @@ export default function GraphvizReact ({
     }
   }, [eventEmitter, onStart, onRenderStart, onRenderEnd, onEnd])
 
-  const onClick = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+  const handleClick = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
     const {
       current = null
     } = ref
@@ -145,16 +165,16 @@ export default function GraphvizReact ({
 
       if (target instanceof Element) {
         if (current.contains(target)) {
-          handleClick(event)
+          onClick(event)
         }
       }
     }
-  }, [dot, options, handleClick])
+  }, [dot, options, onClick])
 
   return (
     <div
       className={classnames('graphviz', className)}
-      onClick={onClick}
+      onClick={handleClick}
       ref={ref}
     />
   )

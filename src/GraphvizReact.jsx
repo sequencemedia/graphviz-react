@@ -38,16 +38,36 @@ const resizeObserver = new ResizeObserver((entries) => {
   }
 })
 
+function handleStart () {
+  //
+}
+
+function handleRenderStart () {
+  //
+}
+
+function handleRenderEnd () {
+  //
+}
+
+function handleEnd () {
+  //
+}
+
+function handleClick () {
+  //
+}
+
 export default function GraphvizReact ({
-  graphRef: ref,
+  graphRef: ref = createRef(),
   dot,
   className,
-  options,
-  onStart,
-  onRenderStart,
-  onRenderEnd,
-  onEnd,
-  onClick: handleClick
+  options = {},
+  onStart = handleStart,
+  onRenderStart = handleRenderStart,
+  onRenderEnd = handleRenderEnd,
+  onEnd = handleEnd,
+  onClick = handleClick
 }) {
   const [eventEmitter, setEventEmitter] = useState(null)
 
@@ -97,7 +117,7 @@ export default function GraphvizReact ({
     }
   }, [eventEmitter, onStart, onRenderStart, onRenderEnd, onEnd])
 
-  const onClick = useCallback((event) => {
+  const handleClick = useCallback((event) => {
     const {
       current = null
     } = ref
@@ -109,16 +129,16 @@ export default function GraphvizReact ({
 
       if (target) {
         if (current.contains(target)) {
-          handleClick(event)
+          onClick(event)
         }
       }
     }
-  }, [dot, options, handleClick])
+  }, [dot, options, onClick])
 
   return (
     <div
       className={classnames('graphviz', className)}
-      onClick={onClick}
+      onClick={handleClick}
       ref={ref}
     />
   )
@@ -136,24 +156,4 @@ GraphvizReact.propTypes = {
   onRenderStart: PropTypes.func,
   onRenderEnd: PropTypes.func,
   onEnd: PropTypes.func
-}
-
-GraphvizReact.defaultProps = {
-  graphRef: createRef(),
-  options: {},
-  onStart () {
-    //
-  },
-  onRenderStart () {
-    //
-  },
-  onRenderEnd () {
-    //
-  },
-  onEnd () {
-    //
-  },
-  onClick () {
-    //
-  }
 }
