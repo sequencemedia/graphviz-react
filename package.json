@@ -52,7 +52,7 @@
     "@typescript-eslint/eslint-plugin": "^7.9.0",
     "@typescript-eslint/parser": "^7.9.0",
     "babel-jest": "^29.7.0",
-    "core-js": "^3.37.0",
+    "core-js": "^3.37.1",
     "d3-graphviz": "^5.4.0",
     "debug": "^4.3.4",
     "eslint": "8.57.0",
