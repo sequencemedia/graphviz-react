@@ -54,7 +54,7 @@
     "babel-jest": "^29.7.0",
     "core-js": "^3.37.1",
     "d3-graphviz": "^5.4.0",
-    "debug": "^4.3.4",
+    "debug": "^4.3.5",
     "eslint": "8.57.0",
     "eslint-config-love": "47.0.0",
     "eslint-config-standard": "^17.1.0",
