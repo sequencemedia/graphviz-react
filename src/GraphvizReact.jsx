@@ -9,6 +9,15 @@ import classnames from 'classnames'
 import {
   graphviz
 } from 'd3-graphviz'
+import debug from 'debug'
+
+function getCurrent ({ current = null } = {}) {
+  return current
+}
+
+function hasCurrent (ref = {}) {
+  return Boolean(getCurrent(ref))
+}
 
 const DEFAULT_OPTIONS = {
   useWorker: false
@@ -38,46 +47,55 @@ const resizeObserver = new ResizeObserver((entries) => {
   }
 })
 
-function handleStart () {
+function DEFAULT_HANDLE_START () {
   //
 }
 
-function handleRenderStart () {
+function DEFAULT_HANDLE_RENDER_START () {
   //
 }
 
-function handleRenderEnd () {
+function DEFAULT_HANDLE_RENDER_END () {
   //
 }
 
-function handleEnd () {
+function DEFAULT_HANDLE_END () {
   //
 }
 
-function handleClick () {
+function DEFAULT_HANDLE_CLICK () {
   //
 }
+
+const log = debug('@sequencemedia/graphviz-react')
 
 export default function GraphvizReact ({
   graphRef: ref = createRef(),
   dot,
   className,
-  options = {},
-  onStart = handleStart,
-  onRenderStart = handleRenderStart,
-  onRenderEnd = handleRenderEnd,
-  onEnd = handleEnd,
-  onClick = handleClick
+  options = DEFAULT_OPTIONS,
+  onStart = DEFAULT_HANDLE_START,
+  onRenderStart = DEFAULT_HANDLE_RENDER_START,
+  onRenderEnd = DEFAULT_HANDLE_RENDER_END,
+  onEnd = DEFAULT_HANDLE_END,
+  onClick = DEFAULT_HANDLE_CLICK
 }) {
-  const [eventEmitter, setEventEmitter] = useState(null)
+  log('GraphvizReact')
+
+  const [
+    eventEmitter,
+    setEventEmitter
+  ] = useState(null)
 
   useEffect(() => {
-    const { fit = false } = options
+    const {
+      fit = false
+    } = options
 
     if (fit) {
-      const { current = null } = ref
+      if (hasCurrent(ref)) {
+        const current = getCurrent(ref)
 
-      if (current) {
         resizeObserver.observe(current)
 
         return () => {
@@ -88,22 +106,18 @@ export default function GraphvizReact ({
   })
 
   useEffect(() => {
-    if (ref) {
-      const {
-        current = null
-      } = ref
+    if (hasCurrent(ref)) {
+      const current = getCurrent(ref)
 
-      if (current) {
-        const eventEmitter = (
-          graphviz(current, {
-            ...DEFAULT_OPTIONS,
-            ...options
-          })
-            .renderDot(dot)
-        )
+      const eventEmitter = (
+        graphviz(current, {
+          ...DEFAULT_OPTIONS,
+          ...options
+        })
+          .renderDot(dot)
+      )
 
-        setEventEmitter(eventEmitter)
-      }
+      setEventEmitter(eventEmitter)
     }
   }, [dot, options])
 
@@ -119,18 +133,14 @@ export default function GraphvizReact ({
 
   const handleClick = useCallback((event) => {
     const {
-      current = null
-    } = ref
+      target = null
+    } = event
 
-    if (current) {
-      const {
-        target = null
-      } = event
+    if (target) {
+      if (hasCurrent(ref)) {
+        const current = getCurrent(ref)
 
-      if (target) {
-        if (current.contains(target)) {
-          onClick(event)
-        }
+        if (current.contains(target)) onClick(event)
       }
     }
   }, [dot, options, onClick])

@@ -5,8 +5,17 @@ import React, {
   useCallback
 } from 'react'
 import classnames from 'classnames'
-import type { GraphvizOptions } from 'd3-graphviz'
-import { graphviz } from 'd3-graphviz'
+import type {
+  BaseType
+} from 'd3-selection'
+import type {
+  Graphviz,
+  GraphvizOptions
+} from 'd3-graphviz'
+import {
+  graphviz
+} from 'd3-graphviz'
+import debug from 'debug'
 
 export interface IGraphvizProps {
   /**
@@ -76,44 +85,55 @@ const resizeObserver = new ResizeObserver((entries) => {
   }
 })
 
-function handleStart (): void {
+function DEFAULT_HANDLE_START (): void {
   //
 }
 
-function handleRenderStart (): void {
+function DEFAULT_HANDLE_RENDER_START (): void {
   //
 }
 
-function handleRenderEnd (): void {
+function DEFAULT_HANDLE_RENDER_END (): void {
   //
 }
 
-function handleEnd (): void {
+function DEFAULT_HANDLE_END (): void {
   //
 }
 
-function handleClick (): void {
+function DEFAULT_HANDLE_CLICK (): void {
   //
 }
+
+const log = debug('@sequencemedia/graphviz-react')
 
 export default function GraphvizReact ({
   graphRef: ref = createRef<HTMLDivElement>(),
   dot,
   className,
-  options = {},
-  onStart = handleStart,
-  onRenderStart = handleRenderStart,
-  onRenderEnd = handleRenderEnd,
-  onEnd = handleEnd,
-  onClick = handleClick
+  options = DEFAULT_OPTIONS,
+  onStart = DEFAULT_HANDLE_START,
+  onRenderStart = DEFAULT_HANDLE_RENDER_START,
+  onRenderEnd = DEFAULT_HANDLE_RENDER_END,
+  onEnd = DEFAULT_HANDLE_END,
+  onClick = DEFAULT_HANDLE_CLICK
 }: IGraphvizProps): JSX.Element {
-  const [eventEmitter, setEventEmitter] = useState<any>(null)
+  log('GraphvizReact')
+
+  const [
+    eventEmitter,
+    setEventEmitter
+  ] = useState<Graphviz<BaseType, any, BaseType, any> | null>(null)
 
   useEffect(() => {
-    const { fit = false } = options
+    const {
+      fit = false
+    } = options
 
     if (fit) {
-      const { current = null } = ref
+      const {
+        current = null
+      } = ref
 
       if (current !== null) {
         resizeObserver.observe(current)
@@ -131,7 +151,7 @@ export default function GraphvizReact ({
     } = ref
 
     if (current !== null) {
-      const eventEmitter: any = (
+      const eventEmitter: Graphviz<BaseType, any, BaseType, any> = (
         graphviz(current, {
           ...DEFAULT_OPTIONS,
           ...options
@@ -155,18 +175,16 @@ export default function GraphvizReact ({
 
   const handleClick = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
     const {
-      current = null
-    } = ref
+      target = null
+    } = event
 
-    if (current !== null) {
+    if (target instanceof Element) {
       const {
-        target = null
-      } = event
+        current = null
+      } = ref
 
-      if (target instanceof Element) {
-        if (current.contains(target)) {
-          onClick(event)
-        }
+      if (current !== null) {
+        if (current.contains(target)) onClick(event)
       }
     }
   }, [dot, options, onClick])
