@@ -39,4 +39,10 @@ export interface IGraphvizProps {
      */
     onEnd?: () => void;
 }
+export declare function hasEventTarget(event: React.MouseEvent<HTMLDivElement, MouseEvent>): boolean;
+export declare function getEventTarget({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): Element;
+export declare function hasEntryTarget(entry: ResizeObserverEntry): boolean;
+export declare function getEntryTarget({ target }: ResizeObserverEntry): Element;
+export declare function hasCurrent(ref: React.RefObject<HTMLDivElement>): boolean;
+export declare function getCurrent({ current }: React.RefObject<HTMLDivElement>): Element;
 export default function GraphvizReact({ graphRef: ref, dot, className, options, onStart, onRenderStart, onRenderEnd, onEnd, onClick }: IGraphvizProps): JSX.Element;

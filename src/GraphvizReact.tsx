@@ -63,14 +63,12 @@ const DEFAULT_OPTIONS: GraphvizOptions = {
 
 const resizeObserver = new ResizeObserver((entries) => {
   for (const entry of entries) {
-    const {
-      target = null
-    } = entry
+    if (hasEntryTarget(entry)) {
+      const target = getEntryTarget(entry)
 
-    if (target !== null) {
       const svg = target.querySelector('svg')
 
-      if (svg !== null) {
+      if (svg instanceof SVGElement) {
         const {
           contentRect: {
             width,
@@ -107,6 +105,45 @@ function DEFAULT_HANDLE_CLICK (): void {
 
 const log = debug('@sequencemedia/graphviz-react')
 
+export function hasEventTarget (event: React.MouseEvent<HTMLDivElement, MouseEvent>): boolean {
+  try {
+    return Boolean(getEventTarget(event))
+  } catch {
+    return false
+  }
+}
+
+export function getEventTarget ({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): Element {
+  if (target instanceof Element) return target
+  throw new Error('Target is not an Element')
+}
+
+export function hasEntryTarget (entry: ResizeObserverEntry): boolean {
+  try {
+    return Boolean(getEntryTarget(entry))
+  } catch {
+    return false
+  }
+}
+
+export function getEntryTarget ({ target }: ResizeObserverEntry): Element {
+  if (target instanceof Element) return target
+  throw new Error('Target is not an Element')
+}
+
+export function hasCurrent (ref: React.RefObject<HTMLDivElement>): boolean {
+  try {
+    return Boolean(getCurrent(ref))
+  } catch {
+    return false
+  }
+}
+
+export function getCurrent ({ current }: React.RefObject<HTMLDivElement>): Element {
+  if (current instanceof Element) return current
+  throw new Error('Ref `current` is null')
+}
+
 export default function GraphvizReact ({
   graphRef: ref = createRef<HTMLDivElement>(),
   dot,
@@ -131,11 +168,9 @@ export default function GraphvizReact ({
     } = options
 
     if (fit) {
-      const {
-        current = null
-      } = ref
+      if (hasCurrent(ref)) {
+        const current = getCurrent(ref)
 
-      if (current !== null) {
         resizeObserver.observe(current)
 
         return () => {
@@ -146,11 +181,9 @@ export default function GraphvizReact ({
   })
 
   useEffect(() => {
-    const {
-      current = null
-    } = ref
+    if (hasCurrent(ref)) {
+      const current = getCurrent(ref)
 
-    if (current !== null) {
       const eventEmitter: Graphviz<BaseType, any, BaseType, any> = (
         graphviz(current, {
           ...DEFAULT_OPTIONS,
@@ -174,16 +207,12 @@ export default function GraphvizReact ({
   }, [eventEmitter, onStart, onRenderStart, onRenderEnd, onEnd])
 
   const handleClick = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
-    const {
-      target = null
-    } = event
+    if (hasEventTarget(event)) {
+      const target = getEventTarget(event)
 
-    if (target instanceof Element) {
-      const {
-        current = null
-      } = ref
+      if (hasCurrent(ref)) {
+        const current = getCurrent(ref)
 
-      if (current !== null) {
         if (current.contains(target)) onClick(event)
       }
     }

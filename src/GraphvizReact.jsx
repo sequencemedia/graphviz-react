@@ -11,13 +11,70 @@ import {
 } from 'd3-graphviz'
 import debug from 'debug'
 
-function getCurrent ({ current = null } = {}) {
-  return current
+export function hasEventTarget (event) {
+  try {
+    return Boolean(getEventTarget(event))
+  } catch {
+    return false
+  }
 }
 
-function hasCurrent (ref = {}) {
-  return Boolean(getCurrent(ref))
+export function getEventTarget ({ target = null }) {
+  if (target instanceof Element) return target
+  throw new Error('Target is not an Element')
 }
+
+export function hasEntryTarget (entry) {
+  try {
+    return Boolean(getEntryTarget(entry))
+  } catch {
+    return false
+  }
+}
+
+export function getEntryTarget ({ target = null }) {
+  if (target instanceof Element) return target
+  throw new Error('Target is not an Element')
+}
+
+export function hasCurrent (ref) {
+  try {
+    return Boolean(getCurrent(ref))
+  } catch {
+    return false
+  }
+}
+
+export function getCurrent ({ current }) {
+  if (current instanceof Element) return current
+  throw new Error('Ref `current` is null')
+}
+
+/*
+export function hasEventTarget (event) {
+  return (getEventTarget(event) instanceof Element)
+}
+
+export function getEventTarget ({ target = null }) {
+  return target
+}
+
+export function hasEntryTarget (entry) {
+  return (getEntryTarget(entry) instanceof Element)
+}
+
+export function getEntryTarget ({ target = null }) {
+  return target
+}
+
+export function hasCurrent (ref = {}) {
+  return (getCurrent(ref) instanceof Element)
+}
+
+export function getCurrent ({ current = null } = {}) {
+  return current
+}
+*/
 
 const DEFAULT_OPTIONS = {
   useWorker: false
@@ -25,14 +82,12 @@ const DEFAULT_OPTIONS = {
 
 const resizeObserver = new ResizeObserver((entries) => {
   for (const entry of entries) {
-    const {
-      target = null
-    } = entry
+    if (hasEntryTarget(entry)) {
+      const target = getEntryTarget(entry)
 
-    if (target) {
       const svg = target.querySelector('svg')
 
-      if (svg) {
+      if (svg instanceof SVGElement) {
         const {
           contentRect: {
             width,
@@ -132,11 +187,9 @@ export default function GraphvizReact ({
   }, [eventEmitter, onStart, onRenderStart, onRenderEnd, onEnd])
 
   const handleClick = useCallback((event) => {
-    const {
-      target = null
-    } = event
+    if (hasEventTarget(event)) {
+      const target = getEventTarget(event)
 
-    if (target) {
       if (hasCurrent(ref)) {
         const current = getCurrent(ref)
 
