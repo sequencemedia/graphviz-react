@@ -11,6 +11,52 @@ import {
 } from 'd3-graphviz'
 import debug from 'debug'
 
+const DEFAULT_OPTIONS = {
+  useWorker: false
+}
+
+function handleEntries (entries) {
+  for (const entry of entries) {
+    if (hasEntryTarget(entry)) {
+      const target = getEntryTarget(entry)
+
+      const svg = target.querySelector('svg')
+
+      if (svg instanceof SVGElement) {
+        const {
+          contentRect: {
+            width,
+            height
+          }
+        } = entry
+
+        svg.setAttribute('width', width + 'px')
+        svg.setAttribute('height', height + 'px')
+      }
+    }
+  }
+}
+
+function DEFAULT_HANDLE_START () {
+  //
+}
+
+function DEFAULT_HANDLE_RENDER_START () {
+  //
+}
+
+function DEFAULT_HANDLE_RENDER_END () {
+  //
+}
+
+function DEFAULT_HANDLE_END () {
+  //
+}
+
+function DEFAULT_HANDLE_CLICK () {
+  //
+}
+
 export function hasEventTarget ({ target = null }) {
   return (target instanceof Element)
 }
@@ -38,51 +84,7 @@ export function getCurrent ({ current = null }) {
   throw new Error('Ref `current` is null')
 }
 
-const DEFAULT_OPTIONS = {
-  useWorker: false
-}
-
-const resizeObserver = new ResizeObserver((entries) => {
-  for (const entry of entries) {
-    if (hasEntryTarget(entry)) {
-      const target = getEntryTarget(entry)
-
-      const svg = target.querySelector('svg')
-
-      if (svg instanceof SVGElement) {
-        const {
-          contentRect: {
-            width,
-            height
-          }
-        } = entry
-
-        svg.setAttribute('width', width + 'px')
-        svg.setAttribute('height', height + 'px')
-      }
-    }
-  }
-})
-
-function DEFAULT_HANDLE_START () {
-  //
-}
-
-function DEFAULT_HANDLE_RENDER_START () {
-  //
-}
-
-function DEFAULT_HANDLE_RENDER_END () {
-  //
-}
-
-function DEFAULT_HANDLE_END () {
-  //
-}
-
-function DEFAULT_HANDLE_CLICK () {
-  //
-}
+const resizeObserver = new ResizeObserver(handleEntries)
 
 const log = debug('@sequencemedia/graphviz-react')
 

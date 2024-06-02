@@ -61,7 +61,7 @@ const DEFAULT_OPTIONS: GraphvizOptions = {
   useWorker: false
 }
 
-const resizeObserver = new ResizeObserver((entries) => {
+function handleEntries (entries: ResizeObserverEntry[]): void {
   for (const entry of entries) {
     if (hasEntryTarget(entry)) {
       const target = getEntryTarget(entry)
@@ -81,7 +81,7 @@ const resizeObserver = new ResizeObserver((entries) => {
       }
     }
   }
-})
+}
 
 function DEFAULT_HANDLE_START (): void {
   //
@@ -102,8 +102,6 @@ function DEFAULT_HANDLE_END (): void {
 function DEFAULT_HANDLE_CLICK (): void {
   //
 }
-
-const log = debug('@sequencemedia/graphviz-react')
 
 export function hasEventTarget ({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): boolean {
   return (target instanceof Element)
@@ -131,6 +129,10 @@ export function getCurrent ({ current }: React.RefObject<HTMLDivElement>): Eleme
   if (current instanceof Element) return current
   throw new Error('Ref `current` is null')
 }
+
+const resizeObserver = new ResizeObserver(handleEntries)
+
+const log = debug('@sequencemedia/graphviz-react')
 
 export default function GraphvizReact ({
   graphRef: ref = createRef<HTMLDivElement>(),
