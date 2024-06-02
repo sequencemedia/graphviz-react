@@ -11,12 +11,8 @@ import {
 } from 'd3-graphviz'
 import debug from 'debug'
 
-export function hasEventTarget (event) {
-  try {
-    return Boolean(getEventTarget(event))
-  } catch {
-    return false
-  }
+export function hasEventTarget ({ target = null }) {
+  return (target instanceof Element)
 }
 
 export function getEventTarget ({ target = null }) {
@@ -24,12 +20,8 @@ export function getEventTarget ({ target = null }) {
   throw new Error('Target is not an Element')
 }
 
-export function hasEntryTarget (entry) {
-  try {
-    return Boolean(getEntryTarget(entry))
-  } catch {
-    return false
-  }
+export function hasEntryTarget ({ target = null }) {
+  return (target instanceof Element)
 }
 
 export function getEntryTarget ({ target = null }) {
@@ -37,44 +29,14 @@ export function getEntryTarget ({ target = null }) {
   throw new Error('Target is not an Element')
 }
 
-export function hasCurrent (ref) {
-  try {
-    return Boolean(getCurrent(ref))
-  } catch {
-    return false
-  }
+export function hasCurrent ({ current = null }) {
+  return (current instanceof Element)
 }
 
-export function getCurrent ({ current }) {
+export function getCurrent ({ current = null }) {
   if (current instanceof Element) return current
   throw new Error('Ref `current` is null')
 }
-
-/*
-export function hasEventTarget (event) {
-  return (getEventTarget(event) instanceof Element)
-}
-
-export function getEventTarget ({ target = null }) {
-  return target
-}
-
-export function hasEntryTarget (entry) {
-  return (getEntryTarget(entry) instanceof Element)
-}
-
-export function getEntryTarget ({ target = null }) {
-  return target
-}
-
-export function hasCurrent (ref = {}) {
-  return (getCurrent(ref) instanceof Element)
-}
-
-export function getCurrent ({ current = null } = {}) {
-  return current
-}
-*/
 
 const DEFAULT_OPTIONS = {
   useWorker: false

@@ -105,12 +105,8 @@ function DEFAULT_HANDLE_CLICK (): void {
 
 const log = debug('@sequencemedia/graphviz-react')
 
-export function hasEventTarget (event: React.MouseEvent<HTMLDivElement, MouseEvent>): boolean {
-  try {
-    return Boolean(getEventTarget(event))
-  } catch {
-    return false
-  }
+export function hasEventTarget ({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): boolean {
+  return (target instanceof Element)
 }
 
 export function getEventTarget ({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): Element {
@@ -118,12 +114,8 @@ export function getEventTarget ({ target }: React.MouseEvent<HTMLDivElement, Mou
   throw new Error('Target is not an Element')
 }
 
-export function hasEntryTarget (entry: ResizeObserverEntry): boolean {
-  try {
-    return Boolean(getEntryTarget(entry))
-  } catch {
-    return false
-  }
+export function hasEntryTarget ({ target }: ResizeObserverEntry): boolean {
+  return (target instanceof Element)
 }
 
 export function getEntryTarget ({ target }: ResizeObserverEntry): Element {
@@ -131,12 +123,8 @@ export function getEntryTarget ({ target }: ResizeObserverEntry): Element {
   throw new Error('Target is not an Element')
 }
 
-export function hasCurrent (ref: React.RefObject<HTMLDivElement>): boolean {
-  try {
-    return Boolean(getCurrent(ref))
-  } catch {
-    return false
-  }
+export function hasCurrent ({ current }: React.RefObject<HTMLDivElement>): boolean {
+  return (current instanceof Element)
 }
 
 export function getCurrent ({ current }: React.RefObject<HTMLDivElement>): Element {
