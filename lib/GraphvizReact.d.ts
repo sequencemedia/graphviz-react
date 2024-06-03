@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import React from 'react';
 import type { GraphvizOptions } from 'd3-graphviz';
 export interface IGraphvizProps {

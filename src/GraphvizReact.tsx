@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import React, {
   createRef,
   useState,
@@ -174,17 +175,22 @@ export default function GraphvizReact ({
     if (hasCurrent(ref)) {
       const current = getCurrent(ref)
 
+      const OPTIONS = {
+        ...DEFAULT_OPTIONS,
+        ...options
+      }
+
       const eventEmitter: Graphviz<BaseType, any, BaseType, any> = (
-        graphviz(current, {
-          ...DEFAULT_OPTIONS,
-          ...options
-        })
+        graphviz(current, OPTIONS)
           .renderDot(dot)
       )
 
       setEventEmitter(eventEmitter)
     }
-  }, [dot, options])
+  }, [
+    dot,
+    options
+  ])
 
   useEffect(() => {
     if (eventEmitter !== null) {
@@ -194,7 +200,13 @@ export default function GraphvizReact ({
         .on('renderEnd', onRenderEnd)
         .on('end', onEnd)
     }
-  }, [eventEmitter, onStart, onRenderStart, onRenderEnd, onEnd])
+  }, [
+    eventEmitter,
+    onStart,
+    onRenderStart,
+    onRenderEnd,
+    onEnd
+  ])
 
   const handleClick = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
     if (hasEventTarget(event)) {
@@ -206,7 +218,11 @@ export default function GraphvizReact ({
         if (current.contains(target)) onClick(event)
       }
     }
-  }, [dot, options, onClick])
+  }, [
+    dot,
+    options,
+    onClick
+  ])
 
   return (
     <div

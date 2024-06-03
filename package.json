@@ -82,5 +82,10 @@
     "d3-selection": "^3.0.0",
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0"
+  },
+  "exports": {
+    ".": "./lib/GraphvizReact.js",
+    "./tsx": "./src/GraphvizReact.tsx",
+    "./jsx": "./src/GraphvizReact.jsx"
   }
 }
