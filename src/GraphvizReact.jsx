@@ -49,6 +49,10 @@ function DEFAULT_HANDLE_RENDER_END () {
   //
 }
 
+function DEFAULT_HANDLE_RENDER_DOT () {
+  //
+}
+
 function DEFAULT_HANDLE_END () {
   //
 }
@@ -96,6 +100,7 @@ export default function GraphvizReact ({
   onStart = DEFAULT_HANDLE_START,
   onRenderStart = DEFAULT_HANDLE_RENDER_START,
   onRenderEnd = DEFAULT_HANDLE_RENDER_END,
+  onRenderDot = DEFAULT_HANDLE_RENDER_DOT,
   onEnd = DEFAULT_HANDLE_END,
   onClick = DEFAULT_HANDLE_CLICK
 }) {
@@ -135,7 +140,7 @@ export default function GraphvizReact ({
 
       const eventEmitter = (
         graphviz(current, OPTIONS)
-          .renderDot(dot)
+          .renderDot(dot, onRenderDot)
       )
 
       setEventEmitter(eventEmitter)
@@ -194,5 +199,6 @@ GraphvizReact.propTypes = {
   onStart: PropTypes.func,
   onRenderStart: PropTypes.func,
   onRenderEnd: PropTypes.func,
+  onRenderDot: PropTypes.func,
   onEnd: PropTypes.func
 }

@@ -53,6 +53,10 @@ export interface IGraphvizProps {
    */
   onRenderEnd?: () => void
   /**
+   *  A handler for the `renderDot` callback
+   */
+  onRenderDot?: () => void
+  /**
    *  A handler for `end` events
    */
   onEnd?: () => void
@@ -93,6 +97,10 @@ function DEFAULT_HANDLE_RENDER_START (): void {
 }
 
 function DEFAULT_HANDLE_RENDER_END (): void {
+  //
+}
+
+function DEFAULT_HANDLE_RENDER_DOT (): void {
   //
 }
 
@@ -143,6 +151,7 @@ export default function GraphvizReact ({
   onStart = DEFAULT_HANDLE_START,
   onRenderStart = DEFAULT_HANDLE_RENDER_START,
   onRenderEnd = DEFAULT_HANDLE_RENDER_END,
+  onRenderDot = DEFAULT_HANDLE_RENDER_DOT,
   onEnd = DEFAULT_HANDLE_END,
   onClick = DEFAULT_HANDLE_CLICK
 }: IGraphvizProps): JSX.Element {
@@ -182,7 +191,7 @@ export default function GraphvizReact ({
 
       const eventEmitter: Graphviz<BaseType, any, BaseType, any> = (
         graphviz(current, OPTIONS)
-          .renderDot(dot)
+          .renderDot(dot, onRenderDot)
       )
 
       setEventEmitter(eventEmitter)

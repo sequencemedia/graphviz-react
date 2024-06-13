@@ -36,6 +36,10 @@ export interface IGraphvizProps {
      */
     onRenderEnd?: () => void;
     /**
+     *  A handler for the `renderDot` callback
+     */
+    onRenderDot?: () => void;
+    /**
      *  A handler for `end` events
      */
     onEnd?: () => void;
@@ -46,4 +50,4 @@ export declare function hasEntryTarget({ target }: ResizeObserverEntry): boolean
 export declare function getEntryTarget({ target }: ResizeObserverEntry): Element;
 export declare function hasCurrent({ current }: React.RefObject<HTMLDivElement>): boolean;
 export declare function getCurrent({ current }: React.RefObject<HTMLDivElement>): Element;
-export default function GraphvizReact({ graphRef: ref, dot, className, options, onStart, onRenderStart, onRenderEnd, onEnd, onClick }: IGraphvizProps): JSX.Element;
+export default function GraphvizReact({ graphRef: ref, dot, className, options, onStart, onRenderStart, onRenderEnd, onRenderDot, onEnd, onClick }: IGraphvizProps): JSX.Element;
