@@ -85,7 +85,7 @@
   },
   "exports": {
     ".": "./lib/GraphvizReact.js",
-    "./tsx": "./src/GraphvizReact.tsx",
-    "./jsx": "./src/GraphvizReact.jsx"
+    "./jsx": "./src/GraphvizReact.jsx",
+    "./tsx": "./src/GraphvizReact.tsx"
   }
 }
