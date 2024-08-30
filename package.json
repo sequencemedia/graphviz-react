@@ -1,6 +1,6 @@
 {
   "name": "@sequencemedia/graphviz-react",
-  "version": "0.1.56",
+  "version": "0.1.57",
   "description": "React component for displaying Graphviz graphs",
   "keywords": [
     "Graphviz",
