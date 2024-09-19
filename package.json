@@ -45,7 +45,7 @@
     "@babel/preset-react": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
     "@hpcc-js/wasm-graphviz": "^1.5.0",
-    "@sequencemedia/hooks": "^1.0.558",
+    "@sequencemedia/hooks": "^1.0.559",
     "@types/d3": "^7.4.3",
     "@types/d3-graphviz": "^2.6.10",
     "@types/d3-selection": "^3.0.10",
