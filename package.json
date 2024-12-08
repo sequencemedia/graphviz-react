@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "classnames": "^2.5.1",
-    "debug": "^4.3.7"
+    "debug": "^4.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -51,7 +51,7 @@
     "@types/debug": "^4.1.12",
     "@types/jest": "^29.5.14",
     "@types/jsdom": "^21.1.7",
-    "@types/react": "^18.3.13",
+    "@types/react": "18.3.1",
     "@types/react-test-renderer": "18.3.1",
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
@@ -69,8 +69,8 @@
     "jest-environment-jsdom": "^29.7.0",
     "jsdom": "^25.0.1",
     "prop-types": "^15.8.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-test-renderer": "18.3.1",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
