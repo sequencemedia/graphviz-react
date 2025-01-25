@@ -38,10 +38,10 @@
     "debug": "^4.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
+    "@babel/core": "^7.26.7",
     "@babel/eslint-parser": "^7.26.5",
     "@babel/plugin-syntax-jsx": "^7.25.9",
-    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-env": "^7.26.7",
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
     "@hpcc-js/wasm-graphviz": "^1.7.0",
