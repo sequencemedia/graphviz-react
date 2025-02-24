@@ -5,24 +5,15 @@
     "jsx": "react",
     "module": "NodeNext",
     "target": "ESNext",
-    "moduleResolution": "NodeNext",
     "strict": true,
     "isolatedModules": true,
-    "noImplicitAny": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "types": [
-      "node"
-    ],
-    "typeRoots": [
-      "./node_modules/@types"
-    ]
+    "baseUrl": "."
   },
   "include": [
     "src"
   ],
   "exclude": [
-    "src/__tests__",
-    "node_modues"
+    "**/__tests__/**/*",
+    "node_modues/**/*"
   ]
 }
