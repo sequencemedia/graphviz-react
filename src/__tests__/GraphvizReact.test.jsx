@@ -1,16 +1,22 @@
 import React from 'react'
-import * as renderer from 'react-test-renderer'
+
+import {
+  render
+} from '@testing-library/react'
+
+import {
+  toSnapshot
+} from 'react-component-snapshot'
+
 import GraphvizReact from '../GraphvizReact.jsx'
 
 describe('<GraphvizReact />', () => {
   it('matches the snapshot', () => {
-    const graphviz = renderer.create(
+    expect(toSnapshot(render(
       <GraphvizReact
         dot='graph { a -- b }'
       />
-    )
-
-    expect(graphviz.toJSON())
+    )))
       .toMatchSnapshot()
   })
 })

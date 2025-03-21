@@ -44,6 +44,12 @@ module.exports = (api) => {
   if (api) api.cache.using(env)
 
   return {
-    presets
+    presets,
+    ignore: [
+      /node_modules\/(?!react-component-instance)\//,
+      /node_modules\/(?!react-component-snapshot)\//,
+      /node_modules\/(?!react-component-name)\//,
+      /node_modules\/core-js\//
+    ]
   }
 }

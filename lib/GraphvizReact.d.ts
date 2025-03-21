@@ -5,7 +5,7 @@ export interface IGraphvizProps {
     /**
      *  A React `ref` for the container
      */
-    graphRef?: React.RefObject<HTMLDivElement>;
+    graphRef?: React.RefObject<any>;
     /**
      * A string containing a graph representation using the Graphviz DOT language.
      * @see https://graphviz.org/doc/info/lang.html
@@ -45,9 +45,9 @@ export interface IGraphvizProps {
     onEnd?: () => void;
 }
 export declare function hasEventTarget({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): boolean;
-export declare function getEventTarget({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): Element;
+export declare function getEventTarget({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): Element | null;
 export declare function hasEntryTarget({ target }: ResizeObserverEntry): boolean;
-export declare function getEntryTarget({ target }: ResizeObserverEntry): Element;
-export declare function hasCurrent({ current }: React.RefObject<HTMLDivElement>): boolean;
+export declare function getEntryTarget({ target }: ResizeObserverEntry): Element | null;
+export declare function hasCurrent(ref?: React.RefObject<any>): ref is React.RefObject<HTMLDivElement>;
 export declare function getCurrent({ current }: React.RefObject<HTMLDivElement>): Element;
 export default function GraphvizReact({ graphRef: ref, dot, className, options, onStart, onRenderStart, onRenderEnd, onRenderDot, onEnd, onClick }: IGraphvizProps): JSX.Element;

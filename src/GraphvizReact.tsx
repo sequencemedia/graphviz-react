@@ -1,6 +1,5 @@
 import type { JSX } from 'react'
 import React, {
-  createRef,
   useState,
   useEffect,
   useCallback
@@ -22,7 +21,7 @@ export interface IGraphvizProps {
   /**
    *  A React `ref` for the container
    */
-  graphRef?: React.RefObject<HTMLDivElement>
+  graphRef?: React.RefObject<any>
   /**
    * A string containing a graph representation using the Graphviz DOT language.
    * @see https://graphviz.org/doc/info/lang.html
@@ -71,18 +70,20 @@ function handleEntries (entries: ResizeObserverEntry[]): void {
     if (hasEntryTarget(entry)) {
       const target = getEntryTarget(entry)
 
-      const svg = target.querySelector('svg')
+      if (target instanceof Element) {
+        const svg = target.querySelector('svg')
 
-      if (svg instanceof SVGElement) {
-        const {
-          contentRect: {
-            width,
-            height
-          }
-        } = entry
+        if (svg instanceof SVGElement) {
+          const {
+            contentRect: {
+              width,
+              height
+            }
+          } = entry
 
-        svg.setAttribute('width', width + 'px')
-        svg.setAttribute('height', height + 'px')
+          svg.setAttribute('width', width + 'px')
+          svg.setAttribute('height', height + 'px')
+        }
       }
     }
   }
@@ -113,30 +114,35 @@ function DEFAULT_HANDLE_CLICK (): void {
 }
 
 export function hasEventTarget ({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): boolean {
-  return (target instanceof Element)
+  if (target instanceof Element) return true
+  return false
 }
 
-export function getEventTarget ({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): Element {
+export function getEventTarget ({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): Element | null {
   if (target instanceof Element) return target
-  throw new Error('Target is not an Element')
+  return null
 }
 
 export function hasEntryTarget ({ target }: ResizeObserverEntry): boolean {
-  return (target instanceof Element)
+  if (target instanceof Element) return true
+  return false
 }
 
-export function getEntryTarget ({ target }: ResizeObserverEntry): Element {
+export function getEntryTarget ({ target }: ResizeObserverEntry): Element | null {
   if (target instanceof Element) return target
-  throw new Error('Target is not an Element')
+  return null
 }
 
-export function hasCurrent ({ current }: React.RefObject<HTMLDivElement>): boolean {
+export function hasCurrent (ref: React.RefObject<any> = { current: null }): ref is React.RefObject<HTMLDivElement> {
+  const {
+    current // = null
+  } = ref
+
   return (current instanceof Element)
 }
 
 export function getCurrent ({ current }: React.RefObject<HTMLDivElement>): Element {
-  if (current instanceof Element) return current
-  throw new Error('Ref `current` is null')
+  return current
 }
 
 const resizeObserver = new ResizeObserver(handleEntries)
@@ -144,7 +150,7 @@ const resizeObserver = new ResizeObserver(handleEntries)
 const log = debug('@sequencemedia/graphviz-react')
 
 export default function GraphvizReact ({
-  graphRef: ref = createRef<HTMLDivElement>(),
+  graphRef: ref,
   dot,
   className,
   options = DEFAULT_OPTIONS,
@@ -221,10 +227,12 @@ export default function GraphvizReact ({
     if (hasEventTarget(event)) {
       const target = getEventTarget(event)
 
-      if (hasCurrent(ref)) {
-        const current = getCurrent(ref)
+      if (target instanceof Element) {
+        if (hasCurrent(ref)) {
+          const current = getCurrent(ref) ?? { contains () { return false } }
 
-        if (current.contains(target)) onClick(event)
+          if (current.contains(target)) onClick(event)
+        }
       }
     }
   }, [
@@ -232,6 +240,8 @@ export default function GraphvizReact ({
     options,
     onClick
   ])
+
+  log(ref)
 
   return (
     <div

@@ -73,7 +73,8 @@
         }
       },
       "rules": {
-        "no-undef": "off"
+        "no-undef": "off",
+        "@typescript-eslint/no-unsafe-argument": "off"
       }
     }
   ],

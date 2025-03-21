@@ -1,5 +1,4 @@
 import React, {
-  createRef,
   useState,
   useEffect,
   useCallback
@@ -20,18 +19,20 @@ function handleEntries (entries) {
     if (hasEntryTarget(entry)) {
       const target = getEntryTarget(entry)
 
-      const svg = target.querySelector('svg')
+      if (target instanceof Element) {
+        const svg = target.querySelector('svg')
 
-      if (svg instanceof SVGElement) {
-        const {
-          contentRect: {
-            width,
-            height
-          }
-        } = entry
+        if (svg instanceof SVGElement) {
+          const {
+            contentRect: {
+              width,
+              height
+            }
+          } = entry
 
-        svg.setAttribute('width', width + 'px')
-        svg.setAttribute('height', height + 'px')
+          svg.setAttribute('width', width + 'px')
+          svg.setAttribute('height', height + 'px')
+        }
       }
     }
   }
@@ -61,31 +62,42 @@ function DEFAULT_HANDLE_CLICK () {
   //
 }
 
-export function hasEventTarget ({ target = null }) {
+export function hasEventTarget ({ target }) {
   return (target instanceof Element)
 }
 
-export function getEventTarget ({ target = null }) {
+export function getEventTarget ({ target }) {
   if (target instanceof Element) return target
-  throw new Error('Target is not an Element')
+  return null
 }
 
-export function hasEntryTarget ({ target = null }) {
+export function hasEntryTarget ({ target }) {
   return (target instanceof Element)
 }
 
-export function getEntryTarget ({ target = null }) {
+export function getEntryTarget ({ target }) {
   if (target instanceof Element) return target
-  throw new Error('Target is not an Element')
+  return null
 }
 
-export function hasCurrent ({ current = null }) {
+/**
+ * @param {React.RefObject<any>} ref
+ * @returns {ref is React.RefObject<HTMLElement>}
+ */
+export function hasCurrent (ref = { current: null }) {
+  const {
+    current // = null
+  } = ref
+
   return (current instanceof Element)
 }
 
-export function getCurrent ({ current = null }) {
-  if (current instanceof Element) return current
-  throw new Error('Ref `current` is null')
+/**
+ * @param {React.RefObject<HTMLElement>} ref
+ * @returns {HTMLElement}
+ */
+export function getCurrent ({ current }) {
+  return current
 }
 
 const resizeObserver = new ResizeObserver(handleEntries)
@@ -93,7 +105,7 @@ const resizeObserver = new ResizeObserver(handleEntries)
 const log = debug('@sequencemedia/graphviz-react')
 
 export default function GraphvizReact ({
-  graphRef: ref = createRef(),
+  graphRef: ref,
   dot,
   className,
   options = DEFAULT_OPTIONS,
@@ -167,10 +179,12 @@ export default function GraphvizReact ({
     if (hasEventTarget(event)) {
       const target = getEventTarget(event)
 
-      if (hasCurrent(ref)) {
-        const current = getCurrent(ref)
+      if (target instanceof Element) {
+        if (hasCurrent(ref)) {
+          const current = getCurrent(ref) ?? { contains () { return false } }
 
-        if (current.contains(target)) onClick(event)
+          if (current.contains(target)) onClick(event)
+        }
       }
     }
   }, [
@@ -178,6 +192,8 @@ export default function GraphvizReact ({
     options,
     onClick
   ])
+
+  log(ref)
 
   return (
     <div

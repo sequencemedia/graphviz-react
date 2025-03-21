@@ -15,11 +15,12 @@ export default {
     '^.+\\.(js|mjs|cjs|jsx)?$': 'babel-jest'
   },
   transformIgnorePatterns: [
-    '/node_modules\\/(?!d3-color)\\/',
-    '/node_modules\\/(?!d3-graphviz)\\/',
+    '/node_modules\\/(?!react-component-instance)\\/',
+    '/node_modules\\/(?!react-component-snapshot)\\/',
+    '/node_modules\\/(?!react-component-name)\\/',
     '/node_modules\\/core-js/'
   ],
   setupFiles: [
-    './src/__tests__/setup.mjs'
+    '<rootDir>/src/__tests__/setup.mjs'
   ]
 }
