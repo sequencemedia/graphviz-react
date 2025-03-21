@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
-    "outDir": "./lib",
-    "declaration": true,
-    "jsx": "react",
     "module": "NodeNext",
     "target": "ESNext",
     "strict": true,
+    "declaration": true,
     "isolatedModules": true,
+    "outDir": "./lib",
+    "jsx": "react",
     "baseUrl": "."
   },
   "include": [
     "."
   ],
   "exclude": [
-    "lib/**/*",
     "**/__tests__/**/*",
+    "lib/**/*",
     "node_modues/**/*"
   ]
 }
