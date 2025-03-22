@@ -61,8 +61,8 @@ export function getEntryTarget ({ target }) {
 }
 
 /**
- * @param {React.RefObject<any>} ref
- * @returns {ref is React.RefObject<HTMLElement>}
+ *  @param {React.RefObject<any>} ref
+ *  @returns {ref is React.RefObject<HTMLElement>}
  */
 export function hasCurrent (ref = { current: null }) {
   const {
@@ -73,8 +73,8 @@ export function hasCurrent (ref = { current: null }) {
 }
 
 /**
- * @param {React.RefObject<HTMLElement>} ref
- * @returns {HTMLElement}
+ *  @param {React.RefObject<HTMLElement>} ref
+ *  @returns {HTMLElement}
  */
 export function getCurrent ({ current }) {
   return current
@@ -155,7 +155,7 @@ export default function GraphvizReact ({
     onEnd
   ])
 
-  const handleClick = useCallback((event) => {
+  const handleClick = useCallback(function handleClick (event) {
     if (hasEventTarget(event)) {
       const target = getEventTarget(event)
 

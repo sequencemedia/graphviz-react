@@ -23,20 +23,21 @@ export interface IGraphvizProps {
    */
   graphRef?: React.RefObject<any>
   /**
-   * A string containing a graph representation using the Graphviz DOT language.
-   * @see https://graphviz.org/doc/info/lang.html
+   *  A string containing a graph representation using the Graphviz DOT language
+   *
+   *  @see https://graphviz.org/doc/info/lang.html
    */
   dot: string
   /**
-   * Options to pass to the Graphviz renderer.
+   *  Configuration options
    */
   options?: GraphvizOptions
   /**
-   * The classname to attach to this component for styling purposes.
+   *  A `className` for the container
    */
   className?: string
   /**
-   *  A handler for click events
+   *  A handler for `click` events
    */
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   /**
@@ -203,7 +204,7 @@ export default function GraphvizReact ({
     onEnd
   ])
 
-  const handleClick = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+  const handleClick = useCallback(function handleClick (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
     if (hasEventTarget(event)) {
       const target = getEventTarget(event)
 
