@@ -38,27 +38,7 @@ function handleEntries (entries) {
   }
 }
 
-function DEFAULT_HANDLE_START () {
-  //
-}
-
-function DEFAULT_HANDLE_RENDER_START () {
-  //
-}
-
-function DEFAULT_HANDLE_RENDER_END () {
-  //
-}
-
-function DEFAULT_HANDLE_RENDER_DOT () {
-  //
-}
-
-function DEFAULT_HANDLE_END () {
-  //
-}
-
-function DEFAULT_HANDLE_CLICK () {
+function DEFAULT_HANDLE_EVENT () {
   //
 }
 
@@ -109,12 +89,12 @@ export default function GraphvizReact ({
   dot,
   className,
   options = DEFAULT_OPTIONS,
-  onStart = DEFAULT_HANDLE_START,
-  onRenderStart = DEFAULT_HANDLE_RENDER_START,
-  onRenderEnd = DEFAULT_HANDLE_RENDER_END,
-  onRenderDot = DEFAULT_HANDLE_RENDER_DOT,
-  onEnd = DEFAULT_HANDLE_END,
-  onClick = DEFAULT_HANDLE_CLICK
+  onStart = DEFAULT_HANDLE_EVENT,
+  onRenderStart = DEFAULT_HANDLE_EVENT,
+  onRenderEnd = DEFAULT_HANDLE_EVENT,
+  onRenderDot = DEFAULT_HANDLE_EVENT,
+  onEnd = DEFAULT_HANDLE_EVENT,
+  onClick = DEFAULT_HANDLE_EVENT
 }) {
   log('GraphvizReact')
 

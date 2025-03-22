@@ -89,27 +89,7 @@ function handleEntries (entries: ResizeObserverEntry[]): void {
   }
 }
 
-function DEFAULT_HANDLE_START (): void {
-  //
-}
-
-function DEFAULT_HANDLE_RENDER_START (): void {
-  //
-}
-
-function DEFAULT_HANDLE_RENDER_END (): void {
-  //
-}
-
-function DEFAULT_HANDLE_RENDER_DOT (): void {
-  //
-}
-
-function DEFAULT_HANDLE_END (): void {
-  //
-}
-
-function DEFAULT_HANDLE_CLICK (): void {
+function DEFAULT_HANDLE_EVENT (): void {
   //
 }
 
@@ -154,12 +134,12 @@ export default function GraphvizReact ({
   dot,
   className,
   options = DEFAULT_OPTIONS,
-  onStart = DEFAULT_HANDLE_START,
-  onRenderStart = DEFAULT_HANDLE_RENDER_START,
-  onRenderEnd = DEFAULT_HANDLE_RENDER_END,
-  onRenderDot = DEFAULT_HANDLE_RENDER_DOT,
-  onEnd = DEFAULT_HANDLE_END,
-  onClick = DEFAULT_HANDLE_CLICK
+  onStart = DEFAULT_HANDLE_EVENT,
+  onRenderStart = DEFAULT_HANDLE_EVENT,
+  onRenderEnd = DEFAULT_HANDLE_EVENT,
+  onRenderDot = DEFAULT_HANDLE_EVENT,
+  onEnd = DEFAULT_HANDLE_EVENT,
+  onClick = DEFAULT_HANDLE_EVENT
 }: IGraphvizProps): JSX.Element {
   log('GraphvizReact')
 
