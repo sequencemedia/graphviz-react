@@ -23,7 +23,7 @@ export interface IGraphvizProps {
     /**
      *  A handler for `click` events
      */
-    onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
     /**
      *  A handler for `start` events
      */
@@ -45,8 +45,8 @@ export interface IGraphvizProps {
      */
     onEnd?: () => void;
 }
-export declare function hasEventTarget({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): boolean;
-export declare function getEventTarget({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): Element | null;
+export declare function hasEventTarget({ target }: React.MouseEvent<HTMLDivElement>): boolean;
+export declare function getEventTarget({ target }: React.MouseEvent<HTMLDivElement>): Element | null;
 export declare function hasEntryTarget({ target }: ResizeObserverEntry): boolean;
 export declare function getEntryTarget({ target }: ResizeObserverEntry): Element | null;
 export declare function hasCurrent(ref?: React.RefObject<any>): ref is React.RefObject<HTMLDivElement>;
