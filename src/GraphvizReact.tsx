@@ -39,7 +39,7 @@ export interface IGraphvizProps {
   /**
    *  A handler for `click` events
    */
-  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
   /**
    *  A handler for `start` events
    */
@@ -94,12 +94,12 @@ function DEFAULT_HANDLE_EVENT (): void {
   //
 }
 
-export function hasEventTarget ({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): boolean {
+export function hasEventTarget ({ target }: React.MouseEvent<HTMLDivElement>): boolean {
   if (target instanceof Element) return true
   return false
 }
 
-export function getEventTarget ({ target }: React.MouseEvent<HTMLDivElement, MouseEvent>): Element | null {
+export function getEventTarget ({ target }: React.MouseEvent<HTMLDivElement>): Element | null {
   if (target instanceof Element) return target
   return null
 }
@@ -204,7 +204,7 @@ export default function GraphvizReact ({
     onEnd
   ])
 
-  const handleClick = useCallback(function handleClick (event: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
+  const handleClick = useCallback(function handleClick (event: React.MouseEvent<HTMLDivElement>): void {
     if (hasEventTarget(event)) {
       const target = getEventTarget(event)
 
