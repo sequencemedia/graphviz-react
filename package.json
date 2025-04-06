@@ -72,7 +72,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "prop-types": "^15.8.1",
     "react": "18.3.1",
-    "react-component-snapshot": "^0.0.25",
+    "react-component-snapshot": "^0.0.26",
     "react-dom": "18.3.1",
     "ts-jest": "^29.3.1",
     "ts-node": "^10.9.2",
