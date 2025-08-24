@@ -2,5 +2,6 @@
 
 npm run lint
 npm test
+npm run type-check -- ./src/GraphvizReact.tsx
 npm run build
 git add lib
