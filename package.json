@@ -34,6 +34,11 @@
     "test": "jest",
     "type-check": "tsc --noEmit"
   },
+  "allowScripts": {
+    "@parcel/watcher@2.6.0": true,
+    "core-js@3.50.0": true,
+    "unrs-resolver@1.12.2": true
+  },
   "dependencies": {
     "classnames": "^2.5.1",
     "debug": "^4.4.3"
@@ -91,10 +96,5 @@
     ".": "./lib/GraphvizReact.js",
     "./jsx": "./src/GraphvizReact.jsx",
     "./tsx": "./src/GraphvizReact.tsx"
-  },
-  "allowScripts": {
-    "@parcel/watcher@2.6.0": true,
-    "core-js@3.50.0": true,
-    "unrs-resolver@1.12.2": true
   }
 }
