@@ -184,8 +184,10 @@ export default function GraphvizReact ({
       setEventEmitter(eventEmitter)
     }
   }, [
+    ref,
+    options,
     dot,
-    options
+    onRenderDot
   ])
 
   useEffect(() => {
@@ -217,8 +219,7 @@ export default function GraphvizReact ({
       }
     }
   }, [
-    dot,
-    options,
+    ref,
     onClick
   ])
 
